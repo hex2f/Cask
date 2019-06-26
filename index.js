@@ -1,6 +1,8 @@
 const Bot = require('./lib')
 const config = require('./config.json')
 
+const VM = new (require('./vm'))()
+
 const mongoose = require('mongoose')
 const { Script } = require('./models')
 
@@ -14,5 +16,7 @@ bot.on('command', async ({ key, msg }) => {
     key: key
   })
 
-  console.log(script)
+  if (!script) return
+
+  VM.run({ msg }, script.code)
 })

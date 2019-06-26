@@ -23,6 +23,7 @@
   "homepage": "https://github.com/rekkyrek/scripcord#readme",
   "dependencies": {
     "discord.js": "^11.5.1",
-    "mongoose": "^5.6.1"
+    "mongoose": "^5.6.1",
+    "vm2": "^3.8.2"
   }
 }
