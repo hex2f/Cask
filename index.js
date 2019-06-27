@@ -1,5 +1,6 @@
 const Bot = require('./lib')
 const config = require('./config.json')
+const { GenericErrorEmbed } = require('./embeds')
 
 const VM = new (require('./vm'))()
 
@@ -18,5 +19,9 @@ bot.on('command', async ({ key, msg }) => {
 
   if (!script) return
 
-  VM.run({ msg }, script.code)
+  try {
+    VM.run({ msg }, script.code)
+  } catch (e) {
+    msg.channel.send(GenericErrorEmbed(e.message))
+  }
 })
