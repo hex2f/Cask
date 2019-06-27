@@ -12,31 +12,50 @@ module.exports = class {
   }
 
   async install (msg) {
+    let key = parseKey(msg.content.split(' ')[2] || '')
+    let cask = await Cask.findOne({ key })
+    if (!cask) {
+      return msg.channel.send(GenericErrorEmbed(`I couldn't find the cask \`>${key}\`. Make sure your spelling is correct! You can browse casks using \`>cask\`.`, `Cask Not Found`))
+    }
 
+    let script = await Script.findOne({ guild: msg.guild.id, key })
+
+    if (script) {
+      let updateMsg = msg.channel.send(WarningEmbed(`Update >${key}?`, `\`>${key}\` is already installed. Do you want to update it?\n(yes/no)`))
+      let shouldUpdate = (await Collector(msg.channel, msg.author.id)).content.toLowerCase().indexOf('yes')
+      updateMsg.delete()
+      if (!shouldUpdate) return msg.channel.send(GenericEmbed('Canceled.', 'The cask was already installed and an update wasn\'t approved.'))
+
+      await script.update({ code: cask.code })
+    } else {
+      await Script.create({ guild: msg.guild.id, key: cask.key, code: cask.code })
+    }
+
+    return msg.channel.send(SuccessEmbed(`Installed >${cask.key}`, `:tada: Successfully installed the cask \`>${cask.key}\`.`))
   }
 
   async publish (msg) {
     let key = parseKey(msg.content.split(' ')[2] || '')
     let script = await Script.findOne({ guild: msg.guild.id, key })
     if (!script) {
-      return msg.channel.send(GenericErrorEmbed(`I couldn't find the command ">${key}". Make sure your spelling is correct! You can see your installed commands using \`>list\`.`))
+      return msg.channel.send(GenericErrorEmbed(`I couldn't find the command \`>${key}\`. Make sure your spelling is correct! You can see your installed commands using \`>list\`.`))
     }
 
     let instruction = await msg.channel.send(GenericEmbed(
       'Publish a Cask',
-      `You've selected the command ">${key}", what would you like this command to be published as? (This has to be a unique name)\nYou can at any time type \`exit\` to cancel the creation of this cask.`))
+      `You've selected the command \`>${key}\`, what would you like this command to be published as? (This has to be a unique name)\nYou can at any time type \`exit\` to cancel the creation of this cask.`))
     let newKey = parseKey((await Collector(msg.channel, msg.author.id)).content)
     if (newKey === 'exit') return
 
     while (await Cask.findOne({ key: newKey }) || newKey.length < 1) {
       instruction.delete()
-      instruction = await msg.channel.send(WarningEmbed('Already in use', `The name "${newKey}" is already in use. Please pick another name or type \`exit\` to cancel the creation of this cask.`))
+      instruction = await msg.channel.send(WarningEmbed('Already in use', `The name \`>${newKey}\` is already in use. Please pick another name or type \`exit\` to cancel the creation of this cask.`))
       newKey = parseKey((await Collector(msg.channel, msg.author.id)).content)
       if (newKey === 'exit') return
     }
 
     instruction.delete()
-    instruction = await msg.channel.send(GenericEmbed('Publish a Cask', `">${newKey}", great name! So, what type of command is this?`, {
+    instruction = await msg.channel.send(GenericEmbed('Publish a Cask', `\`>${newKey}\`, great name! So, what type of command is this?`, {
       fields: [{ name: 'Available Categories', value: Object.values(this.categories).map((c, i) => `\`${i} - ${c}\``).join('\n') }]
     }))
     let category = (await Collector(msg.channel, msg.author.id)).content
@@ -95,11 +114,11 @@ module.exports = class {
   async unpublish (msg) {
     let key = parseKey(msg.content.split(' ')[2])
     let cask = await Cask.findOne({ key })
-    if (!cask) return msg.channel.send(GenericErrorEmbed(`I couldn't find the cask ">${key}". Make sure your spelling is correct.`, `Cask Not Found`))
-    if (cask.authorID !== msg.author.id) return msg.channel.send(GenericErrorEmbed(`You don't own ">${key}". Therefore you can't unpublish it.`, `Permission Denied`))
+    if (!cask) return msg.channel.send(GenericErrorEmbed(`I couldn't find the cask \`>${key}\`. Make sure your spelling is correct.`, `Cask Not Found`))
+    if (cask.authorID !== msg.author.id) return msg.channel.send(GenericErrorEmbed(`You don't own \`>${key}\`. Therefore you can't unpublish it.`, `Permission Denied`))
     try {
       await cask.delete()
-      return msg.channel.send(SuccessEmbed(`Unpublished >${key}`, `:ok_hand: Successfully unpublished the cask ">${key}"`))
+      return msg.channel.send(SuccessEmbed(`Unpublished >${key}`, `:ok_hand: Successfully unpublished the cask \`>${key}\``))
     } catch (e) {
       await msg.channel.send(GenericErrorEmbed('Try again later.'))
     }
