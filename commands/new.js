@@ -26,7 +26,7 @@ module.exports = class {
         '>new CommandTrigger ```js',
         'let something = "hello there!"',
         'msg.reply(something)',
-        '```', '', `To find out more about commands, use \`${msg.prefix}help new\``
+        '```', '', `To find out more about commands, use \`${msg.prefix}cask help new\``
       ].join('\n')))
     }
 

@@ -19,7 +19,7 @@ module.exports = class {
           scripts.map(script => `${msg.prefix}${script.key}`).join('\n')
         ))
       } else {
-        return msg.channel.send(WarningEmbed(`No installed commands.`, `You don't have any commands. Make your own using \`${msg.prefix}new\`, or browse commands made by the community using \`${msg.prefix}cask\` `))
+        return msg.channel.send(WarningEmbed(`No installed commands.`, `You don't have any commands. Make your own using \`${msg.prefix}cask new\`, or browse commands made by the community using \`${msg.prefix}cask top\` `))
       }
     } catch (e) {
       return msg.channel.send(GenericErrorEmbed('Try again later.'))

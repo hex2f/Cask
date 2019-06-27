@@ -13,7 +13,7 @@ module.exports = class {
     let key = parseKey(msg.content.split(' ')[2] || '')
     let cask = await Cask.findOne({ key })
     if (!cask) {
-      return msg.channel.send(GenericErrorEmbed(`I couldn't find the cask \`${msg.prefix}${key}\`. Make sure your spelling is correct! You can browse casks using \`${msg.prefix}cask\`.`, `Cask Not Found`))
+      return msg.channel.send(GenericErrorEmbed(`I couldn't find the cask \`${msg.prefix}${key}\`. Make sure your spelling is correct! You can browse casks using \`${msg.prefix}cask top\`.`, `Cask Not Found`))
     }
 
     let script = await Script.findOne({ guild: (msg.guild || msg.channel).id, key })

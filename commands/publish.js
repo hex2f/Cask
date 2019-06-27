@@ -15,7 +15,7 @@ module.exports = class {
     let key = parseKey(msg.content.split(' ')[2] || '')
     let script = await Script.findOne({ guild: (msg.guild || msg.channel).id, key })
     if (!script) {
-      return msg.channel.send(GenericErrorEmbed(`I couldn't find the command \`${msg.prefix}${key}\`. Make sure your spelling is correct! You can see your installed commands using \`${msg.prefix}list\`.`))
+      return msg.channel.send(GenericErrorEmbed(`I couldn't find the command \`${msg.prefix}${key}\`. Make sure your spelling is correct! You can see your installed commands using \`${msg.prefix}cask list\`.`))
     }
 
     let instruction = await msg.channel.send(GenericEmbed(
@@ -26,13 +26,13 @@ module.exports = class {
 
     while (await Cask.findOne({ key: newKey }) || newKey.length < 1) {
       instruction.delete()
-      instruction = await msg.channel.send(WarningEmbed('Already in use', `The name \`${msg.prefix}${newKey}\` is already in use. Please pick another name or type \`exit\` to cancel the creation of this cask.`))
+      instruction = await msg.channel.send(WarningEmbed('Already in use', `The name \`${newKey}\` is already in use. Please pick another name or type \`exit\` to cancel the creation of this cask.`))
       newKey = parseKey((await Collector(msg.channel, msg.author.id)).content)
       if (newKey === 'exit') return
     }
 
     instruction.delete()
-    instruction = await msg.channel.send(GenericEmbed('Publish a Cask', `\`${msg.prefix}${newKey}\`, great name! So, what type of command is this?`, {
+    instruction = await msg.channel.send(GenericEmbed('Publish a Cask', `\`${newKey}\`, great name! So, what type of command is this?`, {
       fields: [{ name: 'Available Categories', value: Object.values(categories).map((c, i) => `\`${i} - ${c}\``).join('\n') }]
     }))
     let category = (await Collector(msg.channel, msg.author.id)).content
