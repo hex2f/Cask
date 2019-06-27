@@ -1,4 +1,4 @@
-const { Cask, Script } = require('../models')
+const { Cask, Script, Vote } = require('../models')
 const Collector = require('../collector')
 const { GenericEmbed, SuccessEmbed, GenericErrorEmbed, WarningEmbed } = require('../embeds')
 
@@ -32,6 +32,28 @@ module.exports = class {
     }
 
     return msg.channel.send(SuccessEmbed(`Installed >${cask.key}`, `:tada: Successfully installed the cask \`>${cask.key}\`.`))
+  }
+
+  async vote (msg) {
+    let key = parseKey(msg.content.split(' ')[2] || '')
+    let cask = await Cask.findOne({ key })
+    if (!cask) {
+      return msg.channel.send(GenericErrorEmbed(`I couldn't find the cask \`>${key}\`. Make sure your spelling is correct! You can browse casks using \`>cask\`.`, `Cask Not Found`))
+    }
+
+    let voted = await Vote.findOne({ uid: msg.author.id, timeout: { $gt: Date.now() } })
+    if (voted) {
+      let distance = voted.timeout - Date.now()
+
+      let hh = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      let mm = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+      let ss = Math.floor((distance % (1000 * 60)) / 1000)
+
+      return msg.channel.send(WarningEmbed(`Timeout!`, `You can only vote once every 12 hours.\nTime Remaining: \`${hh}:${mm}:${ss}\``))
+    }
+
+    await Vote.create({ uid: msg.author.id, timeout: new Date(Date.now() + (1000 * 60 * 60 * 12)) })
+    await cask.update({ $inc: { score: 1 } })
   }
 
   async publish (msg) {
@@ -129,6 +151,7 @@ module.exports = class {
       fields: [
         { name: 'Categories', value: Object.values(this.categories).map(c => `\`${c}\``).join(' ') },
         { name: '>cask install <command>', value: 'Install a command.' },
+        { name: '>cask vote <command>', value: 'Show your appreciation for a cask by voting.' },
         { name: '>cask search <query>', value: 'Search for a cask.' },
         { name: '>cask top <*category>', value: 'Shows you the top voted casks, category is optional.' },
         { name: '>cask publish <command>', value: 'Publish one of your own commands.' },
@@ -142,6 +165,9 @@ module.exports = class {
       switch (msg.content.split(' ')[1]) {
         case 'install':
           this.install(msg)
+          break
+        case 'vote':
+          this.vote(msg)
           break
         case 'publish':
           this.publish(msg)

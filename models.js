@@ -15,3 +15,8 @@ module.exports.Cask = mongoose.model('casks', {
   code: { type: String, required: true },
   score: { type: Number, default: 0 }
 })
+
+module.exports.Vote = mongoose.model('votes', {
+  uid: { type: String, required: true },
+  timeout: { type: Date, default: Date.now() }
+})
