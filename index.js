@@ -29,7 +29,7 @@ bot.client.on('rateLimit', (rateLimit) => {
     ratelimits[guild.id] = (ratelimits[guild.id] || 0) + 1
     if (ratelimits[guild.id] >= 3) {
       ratelimits[guild.id] = 0
-      try { guild.owner.send(`Left ${guild.name}, too many ratelimits.\nUse \`>invite\` to get a new invite.`) } catch (e) {}
+      try { guild.owner.send(`Left \`${guild.name}\`, too many ratelimits.\nUse \`>invite\` to get a new invite.`) } catch (e) {}
       try { guild.leave() } catch (e) {}
     }
   }
