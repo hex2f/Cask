@@ -10,7 +10,7 @@ module.exports = class {
   }
 
   async trigger (msg) {
-    let key = parseKey(msg.content.split(' ')[2] || '')
+    let key = parseKey(msg.content.split(' ')[1] || '')
     let cask = await Cask.findOne({ key })
     if (!cask) {
       return msg.channel.send(GenericErrorEmbed(`I couldn't find the cask \`${msg.prefix}${key}\`. Make sure your spelling is correct! You can browse casks using \`${msg.prefix}cask top\`.`, `Cask Not Found`))
@@ -19,8 +19,8 @@ module.exports = class {
     let script = await Script.findOne({ guild: (msg.guild || msg.channel).id, key })
 
     if (script) {
-      let updateMsg = msg.channel.send(WarningEmbed(`Update ${msg.prefix}${key}?`, `\`${msg.prefix}${key}\` is already installed. Do you want to update it?\n(yes/no)`))
-      let shouldUpdate = (await Collector(msg.channel, msg.author.id)).content.toLowerCase().indexOf('yes')
+      let updateMsg = await msg.channel.send(WarningEmbed(`Update ${msg.prefix}${key}?`, `\`${msg.prefix}${key}\` is already installed. Do you want to update it?\n(yes/no)`))
+      let shouldUpdate = (await Collector(msg.channel, msg.author.id)).content.toLowerCase().indexOf('yes') > -1
       updateMsg.delete()
       if (!shouldUpdate) return msg.channel.send(GenericEmbed('Canceled.', 'The cask was already installed and an update wasn\'t approved.'))
 
