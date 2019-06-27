@@ -8,7 +8,7 @@ module.exports = class {
   constructor (bot) {
     this.bot = bot
     this.key = 'cask'
-    this.categories = { 1: 'General', 2: 'Moderation', 3: 'Utility', 4: 'Fun', 5: 'Social' }
+    this.categories = { 0: 'General', 1: 'Moderation', 2: 'Utility', 3: 'Fun', 4: 'Social' }
   }
 
   async install (msg) {
@@ -57,7 +57,8 @@ module.exports = class {
     instruction = await msg.channel.send(GenericEmbed('Publish a Cask', `So, how do you use this command and what does it do?`, {
       footer: 'Max 150 characters.'
     }))
-    let description = (await Collector(msg.channel, msg.author.id)).content.substr(0, 150).replace(/@/gm, '__@__')
+    let description = (await Collector(msg.channel, msg.author.id, 360000)).content.substr(0, 150).replace(/@/gm, '__@__')
+    if (description === 'exit') return
 
     instruction.delete()
     instruction = await msg.channel.send(GenericEmbed('Publish a Cask', `Alright! Make sure everything is correct and write \`publish\` when you're ready, or exit to cancel.`, {
@@ -69,7 +70,7 @@ module.exports = class {
       ]
     }))
 
-    let action = (await Collector(msg.channel, msg.author.id)).content
+    let action = (await Collector(msg.channel, msg.author.id, 360000)).content
     while (action !== 'publish') {
       if (action === 'exit') return
       action = (await Collector(msg.channel, msg.author.id)).content
