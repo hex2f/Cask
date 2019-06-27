@@ -12,5 +12,6 @@ module.exports.Cask = mongoose.model('casks', {
   authorTag: { type: String, required: true },
   description: { type: String, default: 'No description' },
   category: { type: Number, default: 0 },
-  code: { type: String, required: true }
+  code: { type: String, required: true },
+  score: { type: Number, default: 0 }
 })
