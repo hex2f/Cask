@@ -1,3 +1,12 @@
+module.exports.GenericEmbed = (title, description, options = {}) => ({
+  embed: {
+    color: 0x66ddff,
+    title,
+    description,
+    ...options
+  }
+})
+
 module.exports.SuccessEmbed = (title, description, options = {}) => ({
   embed: {
     color: 0x55ee77,

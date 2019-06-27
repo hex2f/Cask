@@ -8,9 +8,13 @@ module.exports = class {
   }
 
   async trigger (msg) {
-    let key = msg.content
-      .split(' ')[1]
-      .toLowerCase()
+    let key
+    try {
+      key = msg.content
+        .split(' ')[1]
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]/g, '')
+    } catch (e) {}
 
     if (!key) return msg.channel.send(SyntaxErrorEmbed('>remove CommandTrigger'))
 

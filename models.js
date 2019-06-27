@@ -6,7 +6,7 @@ module.exports.Script = mongoose.model('scripts', {
   code: { type: String, required: true }
 })
 
-module.exports.StoreItem = mongoose.model('storeitems', {
+module.exports.Cask = mongoose.model('casks', {
   key: { type: String, required: true },
   authorID: { type: String, required: true },
   authorTag: { type: String, required: true },

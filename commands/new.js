@@ -8,18 +8,24 @@ module.exports = class {
   }
 
   async trigger (msg) {
-    let key = msg.content
-      .split(' ')[1].split('\n')[0].split('```')[0]
-      .toLowerCase()
-      .replace(/[^a-z0-9_-]/g, '')
+    let key
+    try {
+      key = msg.content
+        .split(' ')[1].split('\n')[0].split('```')[0]
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]/g, '')
+    } catch (e) {}
 
-    let code = (/```[a-z]*\n([\s\S]*?\n)```/gm).exec(msg.content)[1]
+    let code
+    try {
+      code = (/```[a-z]*\n([\s\S]*?\n)```/gm).exec(msg.content)[1]
+    } catch (e) {}
 
     if (!key || !code) {
       return msg.channel.send(SyntaxErrorEmbed([
-        '>new CommandTrigger \\```',
+        '>new CommandTrigger ```js',
         'let something = "hello there!"',
-        'msg.reply(some)',
+        'msg.reply(something)',
         '```', '', 'To find out more about commands, use `>help new`'
       ].join('\n')))
     }
