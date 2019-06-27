@@ -1,5 +1,5 @@
-const { Script } = require('../models')
-const { SuccessEmbed, GenericErrorEmbed, SyntaxErrorEmbed, WarningEmbed } = require('../embeds')
+const { Script } = require('@lib/models')
+const { SuccessEmbed, GenericErrorEmbed, SyntaxErrorEmbed, WarningEmbed } = require('@lib/embeds')
 
 module.exports = class {
   constructor (bot) {
@@ -26,9 +26,9 @@ module.exports = class {
 
       if (script) {
         await script.remove()
-        return msg.channel.send(SuccessEmbed(`Removed >${key}`, `Successfully removed the command ">${key}".`))
+        return msg.channel.send(SuccessEmbed(`Removed ${msg.prefix}${key}`, `Successfully removed the command "${msg.prefix}${key}".`))
       } else {
-        return msg.channel.send(WarningEmbed(`Command not found.`, `I couldn't find the command "${key}". Use \`>list\` to see all your installed commands.`))
+        return msg.channel.send(WarningEmbed(`Command not found.`, `I couldn't find the command "${key}". Use \`${msg.prefix}list\` to see all your installed commands.`))
       }
     } catch (e) {
       return msg.channel.send(GenericErrorEmbed('Try again later.'))

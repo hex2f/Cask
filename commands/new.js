@@ -1,5 +1,5 @@
-const { Script } = require('../models')
-const { SuccessEmbed, GenericErrorEmbed, SyntaxErrorEmbed } = require('../embeds')
+const { Script } = require('@lib/models')
+const { SuccessEmbed, GenericErrorEmbed, SyntaxErrorEmbed } = require('@lib/embeds')
 
 module.exports = class {
   constructor (bot) {
@@ -26,7 +26,7 @@ module.exports = class {
         '>new CommandTrigger ```js',
         'let something = "hello there!"',
         'msg.reply(something)',
-        '```', '', 'To find out more about commands, use `>help new`'
+        '```', '', `To find out more about commands, use \`${msg.prefix}help new\``
       ].join('\n')))
     }
 
@@ -38,14 +38,14 @@ module.exports = class {
 
       if (script) {
         await script.update({ code })
-        return msg.channel.send(SuccessEmbed(`Updated >${key}`, `Successfully updated the command ">${key}".`))
+        return msg.channel.send(SuccessEmbed(`Updated ${msg.prefix}${key}`, `Successfully updated the command "${msg.prefix}${key}".`))
       } else {
         await Script.create({
           guild: (msg.guild || msg.channel).id,
           key,
           code
         })
-        return msg.channel.send(SuccessEmbed(`Created >${key}`, `Successfully created the command ">${key}".`))
+        return msg.channel.send(SuccessEmbed(`Created ${msg.prefix}${key}`, `Successfully created the command "${msg.prefix}${key}".`))
       }
     } catch (e) {
       return msg.channel.send(GenericErrorEmbed(`Try again later.`))

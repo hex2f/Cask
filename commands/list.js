@@ -1,5 +1,5 @@
-const { Script } = require('../models')
-const { GenericEmbed, GenericErrorEmbed, WarningEmbed } = require('../embeds')
+const { Script } = require('@lib/models')
+const { GenericEmbed, GenericErrorEmbed, WarningEmbed } = require('@lib/embeds')
 
 module.exports = class {
   constructor (bot) {
@@ -16,10 +16,10 @@ module.exports = class {
       if (scripts.length > 0) {
         return msg.channel.send(GenericEmbed(
           `Installed Commands`,
-          scripts.map(script => `>${script.key}`).join('\n')
+          scripts.map(script => `${msg.prefix}${script.key}`).join('\n')
         ))
       } else {
-        return msg.channel.send(WarningEmbed(`No installed commands.`, `You don't have any commands. Make your own using \`>new\`, or browse commands made by the community using \`>cask\` `))
+        return msg.channel.send(WarningEmbed(`No installed commands.`, `You don't have any commands. Make your own using \`${msg.prefix}new\`, or browse commands made by the community using \`${msg.prefix}cask\` `))
       }
     } catch (e) {
       return msg.channel.send(GenericErrorEmbed('Try again later.'))

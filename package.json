@@ -23,8 +23,12 @@
   "homepage": "https://github.com/rekkyrek/scripcord#readme",
   "dependencies": {
     "discord.js": "^11.5.1",
+    "module-alias": "^2.2.0",
     "mongoose": "^5.6.1",
     "node-fetch": "^2.6.0",
     "vm2": "^3.8.2"
+  },
+  "_moduleAliases": {
+    "@lib": "./lib"
   }
 }
