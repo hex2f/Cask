@@ -91,6 +91,19 @@ module.exports = class {
     }
   }
 
+  async unpublish (msg) {
+    let key = parseKey(msg.content.split(' ')[2])
+    let cask = await Cask.findOne({ key })
+    if (!cask) return msg.channel.send(GenericErrorEmbed(`I couldn't find the cask ">${key}". Make sure your spelling is correct.`, `Cask Not Found`))
+    if (cask.authorID !== msg.author.id) return msg.channel.send(GenericErrorEmbed(`You don't own ">${key}". Therefore you can't unpublish it.`, `Permission Denied`))
+    try {
+      await cask.delete()
+      return msg.channel.send(SuccessEmbed(`Unpublished >${key}`, `:ok_hand: Successfully unpublished the cask ">${key}"`))
+    } catch (e) {
+      await msg.channel.send(GenericErrorEmbed('Try again later.'))
+    }
+  }
+
   async help (msg) {
     return msg.channel.send(GenericEmbed('The Cask Command', 'Browse through and install community made commands.', {
       fields: [
@@ -98,7 +111,8 @@ module.exports = class {
         { name: '>cask install <command>', value: 'Install a command.' },
         { name: '>cask search <query>', value: 'Search for a cask.' },
         { name: '>cask top <*category>', value: 'Shows you the top voted casks, category is optional.' },
-        { name: '>cask publish <command>', value: 'Publish one of your own commands.' }
+        { name: '>cask publish <command>', value: 'Publish one of your own commands.' },
+        { name: '>cask unpublish <command>', value: 'Unpublish one of your casks.\n*Users that have installed your cask will still have it installed.*' }
       ]
     }))
   }
@@ -111,6 +125,9 @@ module.exports = class {
           break
         case 'publish':
           this.publish(msg)
+          break
+        case 'unpublish':
+          this.unpublish(msg)
           break
         default:
           this.help(msg)
