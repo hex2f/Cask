@@ -1,4 +1,5 @@
 const { Script } = require('../models')
+const { SuccessEmbed, GenericErrorEmbed, SyntaxErrorEmbed } = require('../embeds')
 
 module.exports = class {
   constructor (bot) {
@@ -15,19 +16,12 @@ module.exports = class {
     let code = (/```[a-z]*\n([\s\S]*?\n)```/gm).exec(msg.content)[1]
 
     if (!key || !code) {
-      return msg.channel.send({
-        embed: {
-          color: 0xff6666,
-          title: 'Invalid Syntax',
-          description: [
-            '**Example Usage:**',
-            '>new CommandTrigger \\```',
-            'let something = "hello there!"',
-            'msg.reply(some)',
-            '```'
-          ].join('\n')
-        }
-      })
+      return msg.channel.send(SyntaxErrorEmbed([
+        '>new CommandTrigger \\```',
+        'let something = "hello there!"',
+        'msg.reply(some)',
+        '```', '', 'To find out more about commands, use `>help new`'
+      ].join('\n')))
     }
 
     try {
@@ -38,35 +32,17 @@ module.exports = class {
 
       if (script) {
         await script.update({ code })
-        return msg.channel.send({
-          embed: {
-            color: 0x55ee77,
-            title: `Updated >${key}`,
-            description: `Successfully updated the command ">${key}".`
-          }
-        })
+        return msg.channel.send(SuccessEmbed(`Updated >${key}`, `Successfully updated the command ">${key}".`))
       } else {
         await Script.create({
           guild: msg.guild.id,
           key,
           code
         })
-        return msg.channel.send({
-          embed: {
-            color: 0x55ee77,
-            title: `Created >${key}`,
-            description: `Successfully created the command ">${key}".`
-          }
-        })
+        return msg.channel.send(SuccessEmbed(`Created >${key}`, `Successfully created the command ">${key}".`))
       }
     } catch (e) {
-      return msg.channel.send({
-        embed: {
-          color: 0xff6666,
-          title: 'Something went wrong',
-          description: 'Try again later.'
-        }
-      })
+      return msg.channel.send(GenericErrorEmbed(`Try again later.`))
     }
   }
 }
