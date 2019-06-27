@@ -18,7 +18,7 @@ module.exports = class {
       return msg.channel.send(GenericErrorEmbed(`I couldn't find the cask \`>${key}\`. Make sure your spelling is correct! You can browse casks using \`>cask\`.`, `Cask Not Found`))
     }
 
-    let script = await Script.findOne({ guild: msg.guild.id, key })
+    let script = await Script.findOne({ guild: (msg.guild || msg.channel).id, key })
 
     if (script) {
       let updateMsg = msg.channel.send(WarningEmbed(`Update >${key}?`, `\`>${key}\` is already installed. Do you want to update it?\n(yes/no)`))
@@ -28,7 +28,7 @@ module.exports = class {
 
       await script.update({ code: cask.code })
     } else {
-      await Script.create({ guild: msg.guild.id, key: cask.key, code: cask.code })
+      await Script.create({ guild: (msg.guild || msg.channel).id, key: cask.key, code: cask.code })
     }
 
     return msg.channel.send(SuccessEmbed(`Installed >${cask.key}`, `:tada: Successfully installed the cask \`>${cask.key}\`.`))
@@ -56,9 +56,18 @@ module.exports = class {
     await cask.update({ $inc: { score: 1 } })
   }
 
+  async search (msg) {
+    let query = msg.content.split(' ').slice(2).join(' ')
+    let results = await Cask.find({ $text: { $search: query } }).sort({ score: -1 })
+    if (results.length === 0) return msg.channel.send(WarningEmbed('No Results.', `Couldn't find any casks for that search. Try something else.`))
+    return msg.channel.send(GenericEmbed('The Cask Command', 'Browse through and install community made commands.', {
+      fields: results.map(cask => ({ name: `>${cask.key}`, value: `${cask.description}\n[${cask.score} Votes]` }))
+    }))
+  }
+
   async publish (msg) {
     let key = parseKey(msg.content.split(' ')[2] || '')
-    let script = await Script.findOne({ guild: msg.guild.id, key })
+    let script = await Script.findOne({ guild: (msg.guild || msg.channel).id, key })
     if (!script) {
       return msg.channel.send(GenericErrorEmbed(`I couldn't find the command \`>${key}\`. Make sure your spelling is correct! You can see your installed commands using \`>list\`.`))
     }
@@ -127,7 +136,7 @@ module.exports = class {
         code: script.code
       })
 
-      instruction = await msg.channel.send(SuccessEmbed('Published!', ':tada: Hooray! Your cask has been published!'))
+      instruction = await msg.channel.send(SuccessEmbed(`Published >${key}`, ':tada: Hooray! Your cask has been published!'))
     } catch (e) {
       instruction = await msg.channel.send(GenericErrorEmbed('Try again later.'))
     }
@@ -168,6 +177,9 @@ module.exports = class {
           break
         case 'vote':
           this.vote(msg)
+          break
+        case 'search':
+          this.search(msg)
           break
         case 'publish':
           this.publish(msg)

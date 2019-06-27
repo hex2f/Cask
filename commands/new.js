@@ -32,7 +32,7 @@ module.exports = class {
 
     try {
       let script = await Script.findOne({
-        guild: msg.guild.id,
+        guild: (msg.guild || msg.channel).id,
         key
       })
 
@@ -41,7 +41,7 @@ module.exports = class {
         return msg.channel.send(SuccessEmbed(`Updated >${key}`, `Successfully updated the command ">${key}".`))
       } else {
         await Script.create({
-          guild: msg.guild.id,
+          guild: (msg.guild || msg.channel).id,
           key,
           code
         })

@@ -4,14 +4,16 @@ const crypto = require('crypto')
 const { VM } = require('vm2')
 
 module.exports = class DVM {
-  run (sandbox, code) {
-    new VM({
-      sandbox: {
-        ...sandbox,
-        fetch,
-        crypto
-      },
+  run (msg, code) {
+    let vm = new VM({
+      sandbox: {},
       timeout: 2500
-    }).run(code)
+    })
+
+    vm.freeze(msg, 'msg')
+    vm.freeze(fetch, 'fetch')
+    vm.freeze(crypto, 'crypto')
+
+    vm.run(code)
   }
 }

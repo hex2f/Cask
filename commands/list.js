@@ -10,7 +10,7 @@ module.exports = class {
   async trigger (msg) {
     try {
       let scripts = await Script.find({
-        guild: msg.guild.id
+        guild: (msg.guild || msg.channel).id
       })
 
       if (scripts.length > 0) {

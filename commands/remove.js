@@ -20,7 +20,7 @@ module.exports = class {
 
     try {
       let script = await Script.findOne({
-        guild: msg.guild.id,
+        guild: (msg.guild || msg.channel).id,
         key
       })
 
