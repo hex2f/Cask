@@ -68,7 +68,5 @@ module.exports = class {
         }
       })
     }
-
-    console.log(key, code)
   }
 }
