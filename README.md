@@ -9,21 +9,22 @@ Easy, [click this link](https://discordapp.com/oauth2/authorize?client_id=593852
 Every time a message is sent with the selected prefix in the beginning of the message, `>` by default, it looks up any stored commands for your server.
 If it finds any matching commands, it instantiates a new JavaScript virtual machine which has the following variables in its global scope:
 
-| Variable Name | Description                                                   |
-|---------------|---------------------------------------------------------------|
-| msg           | The Discord.JS message object.                                |
-| fetch         | An instance of node-fetch, so you can interact with APIs etc. |
-| crypto        | The NodeJS crypto API.                                        |
+| Variable Name                                                  | Description                                                   |
+|----------------------------------------------------------------|---------------------------------------------------------------|
+| [msg](https://discord.js.org/#/docs/main/stable/class/Message) | The Discord.JS message object.                                |
+| [fetch](https://www.npmjs.com/package/node-fetch)              | An instance of node-fetch, so you can interact with APIs etc. |
+| [crypto](https://nodejs.org/api/crypto.html)                   | The NodeJS crypto API.                                        |
 
 ## Commands
-| Command                                                               | Description                                  |
-|-----------------------------------------------------------------------|----------------------------------------------|
-| [>cask new](https://github.com/RekkyRek/cask/blob/master/docs/new.md)             | Create a new local command.                  |
-| [>cask install](https://github.com/RekkyRek/cask/blob/master/docs/install.md)     | Install a command.                           |
-| [>cask remove](https://github.com/RekkyRek/cask/blob/master/docs/remove.md)       | Remove a command.                            |
-| [>cask list](https://github.com/RekkyRek/cask/blob/master/docs/list.md)           | List all installed commands.                 |
-| [>cask vote](https://github.com/RekkyRek/cask/blob/master/docs/vote.md)           | Show your appreciation for a cask by voting. |
-| [>cask search](https://github.com/RekkyRek/cask/blob/master/docs/search.md)       | Search for a cask.                           |
-| [>cask top](https://github.com/RekkyRek/cask/blob/master/docs/top.md)             | Shows you the top voted casks.               |
-| [>cask publish](https://github.com/RekkyRek/cask/blob/master/docs/publish.md)     | Publish one of your local commands.          |
-| [>cask unpublish](https://github.com/RekkyRek/cask/blob/master/docs/unpublish.md) | Unpublish one of your casks.                 |
+| Command                                                                             | Description                                        |
+|-------------------------------------------------------------------------------------|----------------------------------------------------|
+| [>cask new](https://github.com/RekkyRek/cask/blob/master/docs/new.md)               | Create a new local command.                        |
+| [>cask install](https://github.com/RekkyRek/cask/blob/master/docs/install.md)       | Install a command.                                 |
+| [>cask remove](https://github.com/RekkyRek/cask/blob/master/docs/remove.md)         | Remove a command.                                  |
+| [>cask list](https://github.com/RekkyRek/cask/blob/master/docs/list.md)             | List all installed commands.                       |
+| [>cask vote](https://github.com/RekkyRek/cask/blob/master/docs/vote.md)             | Show your appreciation for a cask by voting.       |
+| [>cask search](https://github.com/RekkyRek/cask/blob/master/docs/search.md)         | Search for a cask.                                 |
+| [>cask top](https://github.com/RekkyRek/cask/blob/master/docs/top.md)               | Shows you the top voted casks.                     |
+| [>cask publish](https://github.com/RekkyRek/cask/blob/master/docs/publish.md)       | Publish one of your local commands.                |
+| [>cask unpublish](https://github.com/RekkyRek/cask/blob/master/docs/unpublish.md)   | Unpublish one of your casks.                       |
+| [>cask permission](https://github.com/RekkyRek/cask/blob/master/docs/permission.md) | Manage who can use what.                           |

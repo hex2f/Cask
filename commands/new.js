@@ -16,6 +16,8 @@ module.exports = class {
         .replace(/[^a-z0-9_-]/g, '')
     } catch (e) {}
 
+    if (key === 'all') return new GenericErrorEmbed('Invalid name.')
+
     let code
     try {
       code = (/```[a-z]*\n([\s\S]*?\n)```/gm).exec(msg.content)[1]

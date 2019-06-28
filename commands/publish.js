@@ -24,7 +24,7 @@ module.exports = class {
     let newKey = parseKey((await Collector(msg.channel, msg.author.id)).content)
     if (newKey === 'exit') return
 
-    while (await Cask.findOne({ key: newKey }) || newKey.length < 1) {
+    while (await Cask.findOne({ key: newKey }) || newKey.length < 1 || newKey === 'all') {
       instruction.delete()
       instruction = await msg.channel.send(WarningEmbed('Already in use', `The name \`${newKey}\` is already in use. Please pick another name or type \`exit\` to cancel the creation of this cask.`))
       newKey = parseKey((await Collector(msg.channel, msg.author.id)).content)
@@ -53,7 +53,7 @@ module.exports = class {
     instruction = await msg.channel.send(GenericEmbed('Publish a Cask', `So, how do you use this command and what does it do?`, {
       footer: 'Max 150 characters.'
     }))
-    let description = (await Collector(msg.channel, msg.author.id, 360000)).content.substr(0, 150).replace(/@/gm, '__@__')
+    let description = (await Collector(msg.channel, msg.author.id, 360000)).content.substr(0, 150).replace(/\\n/gm, '\n')
     if (description === 'exit') return
 
     instruction.delete()

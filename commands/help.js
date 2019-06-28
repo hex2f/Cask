@@ -18,7 +18,9 @@ module.exports = class {
         { name: msg.prefix + 'cask search <query>', value: 'Search for a cask.' },
         { name: msg.prefix + 'cask top <*category>', value: 'Shows you the top voted casks, category is optional.' },
         { name: msg.prefix + 'cask publish <command>', value: 'Publish one of your local commands.' },
-        { name: msg.prefix + 'cask unpublish <command>', value: 'Unpublish one of your casks.\n*Users that have installed your cask will still have it installed.*' }
+        { name: msg.prefix + 'cask unpublish <command>', value: 'Unpublish one of your casks.\n*Users that have installed your cask will still have it installed.*' },
+        { name: msg.prefix + 'cask grant <command> <mention>', value: 'Grant a user the permission to a specific command.' },
+        { name: msg.prefix + 'cask revoke <command> <mention>', value: 'Revoke the permission to use a command for a sepecific user.' }
       ]
     }))
   }
