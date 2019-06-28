@@ -1,5 +1,5 @@
 # >cask remove
-Remove a command. This only removes local commands, if you want to remove a command from the community, use [>cask unpublish](https://github.com/RekkyRek/cask/docs/unpublish.md).
+Remove a command. This only removes local commands, if you want to remove a command from the community, use [>cask unpublish](https://github.com/RekkyRek/cask/blob/master/docs/unpublish.md).
 
 ## Usage
 ```
