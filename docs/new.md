@@ -9,4 +9,4 @@ Make a new command, these are local to your server and are not published to the 
 To publish a command to the cask community, use [>cask publish](https://github.com/RekkyRek/cask/docs/publish.md), to remove a command, use [>cask remove](https://github.com/RekkyRek/cask/docs/remove.md)
 
 ## Example
-![>cask install example](https://i.imgur.com/Csfbm1u.png)
+![>cask new example](https://i.imgur.com/Csfbm1u.png)
