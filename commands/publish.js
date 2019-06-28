@@ -12,7 +12,7 @@ module.exports = class {
   }
 
   async trigger (msg) {
-    let key = parseKey(msg.content.split(' ')[2] || '')
+    let key = parseKey(msg.content.split(' ')[1] || '')
     let script = await Script.findOne({ guild: (msg.guild || msg.channel).id, key })
     if (!script) {
       return msg.channel.send(GenericErrorEmbed(`I couldn't find the command \`${msg.prefix}${key}\`. Make sure your spelling is correct! You can see your installed commands using \`${msg.prefix}cask list\`.`))

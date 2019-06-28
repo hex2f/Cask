@@ -3,7 +3,7 @@ Install commands [published](https://github.com/RekkyRek/cask/docs/publish.md) t
 
 ## Usage
 ```
->cask install <Cask Name>
+>cask install <cask name>
 ```
 
 To browse casks, use [>cask search](https://github.com/RekkyRek/cask/docs/search.md) and [>cask top](https://github.com/RekkyRek/cask/docs/top.md)

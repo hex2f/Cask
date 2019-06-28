@@ -13,7 +13,7 @@ module.exports = class {
     let category = categories[(msg.content.split(' ')[1] || '').toLowerCase()]
     let results = await Cask.find(category !== undefined ? { category } : {}).sort({ score: -1 }).limit(5)
     if (results.length === 0) return msg.channel.send(WarningEmbed('No Results.', `Couldn't find any casks for that search. Try something else.`))
-    return msg.channel.send(GenericEmbed('The Cask Command', 'Browse through and install community made commands.', {
+    return msg.channel.send(GenericEmbed('Top Casks', '', {
       fields: results.map(cask => ({ name: `>${cask.key}`, value: `${cask.description}\n[${categoryNames[cask.category]}] [${cask.score} Votes]` }))
     }))
   }
