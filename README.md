@@ -18,12 +18,12 @@ If it finds any matching commands, it instantiates a new JavaScript virtual mach
 ## Commands
 | Command                                                               | Description                                  |
 |-----------------------------------------------------------------------|----------------------------------------------|
-| [>cask new](https://github.com/RekkyRek/cask/docs/new.md)             | Create a new local command.                  |
-| [>cask install](https://github.com/RekkyRek/cask/docs/install.md)     | Install a command.                           |
-| [>cask remove](https://github.com/RekkyRek/cask/docs/remove.md)       | Remove a command.                            |
-| [>cask list](https://github.com/RekkyRek/cask/docs/list.md)           | List all installed commands.                 |
-| [>cask vote](https://github.com/RekkyRek/cask/docs/vote.md)           | Show your appreciation for a cask by voting. |
-| [>cask search](https://github.com/RekkyRek/cask/docs/search.md)       | Search for a cask.                           |
-| [>cask top](https://github.com/RekkyRek/cask/docs/top.md)             | Shows you the top voted casks.               |
-| [>cask publish](https://github.com/RekkyRek/cask/docs/publish.md)     | Publish one of your local commands.          |
-| [>cask unpublish](https://github.com/RekkyRek/cask/docs/unpublish.md) | Unpublish one of your casks.                 |
+| [>cask new](https://github.com/RekkyRek/cask/blob/master/docs/new.md)             | Create a new local command.                  |
+| [>cask install](https://github.com/RekkyRek/cask/blob/master/docs/install.md)     | Install a command.                           |
+| [>cask remove](https://github.com/RekkyRek/cask/blob/master/docs/remove.md)       | Remove a command.                            |
+| [>cask list](https://github.com/RekkyRek/cask/blob/master/docs/list.md)           | List all installed commands.                 |
+| [>cask vote](https://github.com/RekkyRek/cask/blob/master/docs/vote.md)           | Show your appreciation for a cask by voting. |
+| [>cask search](https://github.com/RekkyRek/cask/blob/master/docs/search.md)       | Search for a cask.                           |
+| [>cask top](https://github.com/RekkyRek/cask/blob/master/docs/top.md)             | Shows you the top voted casks.               |
+| [>cask publish](https://github.com/RekkyRek/cask/blob/master/docs/publish.md)     | Publish one of your local commands.          |
+| [>cask unpublish](https://github.com/RekkyRek/cask/blob/master/docs/unpublish.md) | Unpublish one of your casks.                 |
