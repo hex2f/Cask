@@ -9,7 +9,7 @@ const VM = new (require('@lib/vm'))()
 const mongoose = require('mongoose')
 const { Script } = require('@lib/models')
 
-mongoose.connect(`mongodb://${config.db.addr}`, { auth: { authSource: 'admin' }, user: config.db.user, pass: config.db.pass, useNewUrlParser: true })
+mongoose.connect(`mongodb://${config.db.addr}`, { auth: { authSource: 'scripcord' }, user: config.db.user, pass: config.db.pass, useNewUrlParser: true })
 
 const bot = new Bot(config)
 
