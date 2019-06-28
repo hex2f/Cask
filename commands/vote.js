@@ -1,5 +1,5 @@
 const { Cask, Vote } = require('@lib/models')
-const { GenericErrorEmbed, WarningEmbed } = require('@lib/embeds')
+const { GenericErrorEmbed, WarningEmbed, SuccessEmbed } = require('@lib/embeds')
 const parseKey = key => key.toLowerCase().replace(/[^a-z0-9_-]/g, '').split(' ')[0]
 
 module.exports = class {
@@ -28,5 +28,7 @@ module.exports = class {
 
     await Vote.create({ uid: msg.author.id, timeout: new Date(Date.now() + (1000 * 60 * 60 * 12)) })
     await cask.update({ $inc: { score: 1 } })
+
+    return msg.channel.send(SuccessEmbed(`Voted for ${msg.prefix}${cask.key}`, `:tada: You've voted for \`>${cask.key}\`! It now has ${cask.score + 1} votes.`))
   }
 }
