@@ -2,9 +2,6 @@
 ## What is it?
 Cask is a unique Discord bot that lets you create entirely custom commands using JavaScript. It's very simple to use, you just write your code in a code block where you have access to the Discord.JS message object, fetch and the NodeJS crypto api. You can also install cool commands others have published using [>cask install](https://github.com/RekkyRek/cask/blob/master/docs/install.md) or publish your own commands using [>cask publish](https://github.com/RekkyRek/cask/blob/master/docs/publish.md).
 
-## How do i get it into my server?
-Easy, [click this link](https://discordapp.com/oauth2/authorize?client_id=593852428626165760&scope=bot&permissions=2101869815), select which server you want it in and uncheck any permissions you don't want it to have :ok_hand:
-
 ## How does it work?
 Every time a message is sent with the selected prefix in the beginning of the message, `>` by default, it looks up any stored commands for your server.
 If it finds any matching commands, it instantiates a new JavaScript virtual machine which has the following variables in its global scope:
